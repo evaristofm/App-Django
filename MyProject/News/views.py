@@ -14,3 +14,12 @@ def news_detalhes(request):
         "obj": obj
     }
     return render(request, 'news_detalhes.html', context)
+
+def news_anual(request, year):
+    list = News.objects.filter(pub_date__year=year)
+    context = {
+        'year': year,
+        'arquivo_list': list
+    }
+    return render(request, 'news_anual.html', context)
+
