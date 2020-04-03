@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect
+from django.contrib import messages 
 from .models import News, SportNews, Registro
 from .forms import RegistroForm
 
@@ -37,5 +38,6 @@ def addUser(request):
                             email=form.cleaned_data['email'],
                             phone=form.cleaned_data['phone'])
         registro.save()
-        return redirect('/')
+        messages.add_message(request,messages.SUCCESS,"Cadastro realizado com sucesso!")
+        return redirect('add')
 
