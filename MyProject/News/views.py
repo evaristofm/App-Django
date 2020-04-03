@@ -1,5 +1,6 @@
-from django.shortcuts import render, HttpResponse
-from .models import News, SportNews
+from django.shortcuts import render, HttpResponse, redirect
+from .models import News, SportNews, Registro
+from .forms import RegistroForm
 
 
 def home(request):
@@ -22,4 +23,19 @@ def news_anual(request, year):
         'arquivo_list': list
     }
     return render(request, 'news_anual.html', context)
+
+
+def registro(request):
+    context = {"form": RegistroForm}
+    return render(request, 'registro.html', context)
+
+def addUser(request):
+    form = RegistroForm(request.POST)
+    if form.is_valid():
+        registro = Registro(user_name=form.cleaned_data['user_name'],
+                            password=form.cleaned_data['password'],
+                            email=form.cleaned_data['email'],
+                            phone=form.cleaned_data['phone'])
+        registro.save()
+        return redirect('/')
 
